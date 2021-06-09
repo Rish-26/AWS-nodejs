@@ -6,7 +6,7 @@ const url = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
 const util = require("util");
 const formidable = require("formidable");
-
+var recievedObj = {}
 const server = http.createServer(function(req, res){
   //console.log(req.headers);
   //console.log(req.url);
@@ -20,8 +20,10 @@ const server = http.createServer(function(req, res){
         return;
       }
       res.writeHead(200);
-      res.write('the POST response \n\n')
+      res.write('the POST response from server \n\n')
       res.end(util.inspect({fields:fields, files:files}));
+      recievedObj = util.inspect({fields:fields});
+      console.log(recievedObj);
     })
   }else if (req.method.toLowerCase() == 'get'){
     res.writeHead(200);
