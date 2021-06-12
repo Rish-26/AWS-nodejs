@@ -9,7 +9,11 @@ const formidable = require("formidable");
 
 var recievedObj = {}  //ls object to get the data from the POST requests
 var notifObj = {"flag":0,
-  "param":"!!ALARM!!\n"}; //param string gets appended with all the data thats out of place
+  "param":""}; //param string gets appended with all the data thats out of place
+var count = 0; //for the latency Test
+var timeStamp = []
+var lat = [];
+var i = 0;
 
 const server = http.createServer(function(req, res){
   //console.log(req.headers);
@@ -26,11 +30,13 @@ const server = http.createServer(function(req, res){
         return;
       }
       res.writeHead(200);
-      res.write('the POST response from server \n\n')
-      res.end(util.inspect({fields:fields}));
+      res.write('');
       recievedObj = {fields:fields};
       recievedObj = recievedObj.fields;
+      res.end(JSON.stringify(recievedObj));
       console.log(">" + Date() + "\n", recievedObj);
+      //clearing the notifObj.param string
+      notifObj.param = "!!ALARM!!\n";
       //if statements for notifying the doctor application
       if (recievedObj.heartRate < 60){
         notifObj.flag = 1;
@@ -39,18 +45,42 @@ const server = http.createServer(function(req, res){
       }
     })
   //responding to get request got notification at /doc/notif/
-}else if (req.method.toLowerCase() == 'get' & req.url == '/doc/notif/' & notifObj.flag == 1){
+  }else if (req.method.toLowerCase() == 'get' & req.url == '/doc/notif/' & notifObj.flag == 1){
     res.writeHead(200);
     res.write(JSON.stringify(notifObj));
     res.end();
     console.log(">" + Date() + "\nNotification sent.");
     notifObj.flag = 0;
     notifObj.param = "!!ALARM!!\n";
+  }else if(req.method.toLowerCase() == 'get' & req.url == '/doc/data/'){
+    res.writeHead(200);
+    res.write(JSON.stringify(recievedObj));
+    res.end();
+    console.log(">"+Date()+"\nSent data:\n"+ recievedObj);
+  }else if(req.method.toLowerCase() == 'get' & req.url == '/latency/'){
+    var t = process.hrtime()
+    timeStamp[count] =  t[1];
+    res.writeHead(200);
+    res.write("");
+    res.end();
+    //console.log("received latency check " + (count+1));
+    //console.log(timeStamp);
+    count++;
+    if (count == 11){
+        for(i=0; i<10; i++){
+          if(timeStamp[i+1] > timeStamp[i]){
+            lat[i] = (timeStamp[i+1] - timeStamp[i])/1000000;  //converting to ms
+          }else{
+            lat[i] = (1000000000 - timeStamp[i+1] - timeStamp[i])/1000000;  //converting to ms
+          }
+        }
+      console.log(lat);
+      count = 0;
+      timeStamp = [];
+    }
   }else{
-    //other requests
+    //other
   }
-
-
 });
 
 server.listen(8585, function(){
