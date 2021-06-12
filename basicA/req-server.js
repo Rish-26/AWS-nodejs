@@ -13,6 +13,7 @@ var notifObj = {"flag":0,
 var count = 0; //for the latency Test
 var timeStamp = []
 var lat = [];
+var latAvg = 0;
 var i = 0;
 
 const server = http.createServer(function(req, res){
@@ -67,14 +68,19 @@ const server = http.createServer(function(req, res){
     //console.log(timeStamp);
     count++;
     if (count == 11){
-        for(i=0; i<10; i++){
-          if(timeStamp[i+1] > timeStamp[i]){
-            lat[i] = (timeStamp[i+1] - timeStamp[i])/1000000;  //converting to ms
-          }else{
-            lat[i] = (1000000000 - timeStamp[i+1] - timeStamp[i])/1000000;  //converting to ms
-          }
+
+      for(i=0; i<10; i++){
+        if(timeStamp[i+1] > timeStamp[i]){
+          lat[i] = (timeStamp[i+1] - timeStamp[i])/1000000;  //converting to ms
+        }else{
+          lat[i] = (1000000000 - timeStamp[i+1] - timeStamp[i])/1000000;  //converting to ms
         }
-      console.log(lat);
+      }
+      for(i=0;i<10;i++){
+        latAvg = latAvg + lat[i];
+      }
+      latAvg = latAvg/10;
+      console.log(latAvg);
       count = 0;
       timeStamp = [];
     }
