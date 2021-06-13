@@ -11,6 +11,7 @@ no = 11; //number of requests
 while(j<no){
   axios.get("http://"+ip+":8585/latency/")
   .then(function (response){
+    console.log(response.data)
   })
   .catch(function(error){
     console.log(error);

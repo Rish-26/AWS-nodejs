@@ -43,10 +43,16 @@ const server = http.createServer(function(req, res){
         notifObj.flag = 1;
         notifObj.param = notifObj.param + "Heart Rate is " + recievedObj.heartRate;
         //console.log(notifObj);
+      }else{
+
       }
     })
-  //responding to get request got notification at /doc/notif/
+//responding to get request got notification at /doc/notif/
   }else if (req.method.toLowerCase() == 'get' & req.url == '/doc/notif/' & notifObj.flag == 1){
+    if(err){
+      console.error(er.message);
+      return;
+    }
     res.writeHead(200);
     res.write(JSON.stringify(notifObj));
     res.end();
@@ -54,6 +60,10 @@ const server = http.createServer(function(req, res){
     notifObj.flag = 0;
     notifObj.param = "!!ALARM!!\n";
   }else if(req.method.toLowerCase() == 'get' & req.url == '/doc/data/'){
+    if(err){
+      console.error(er.message);
+      return;
+    }
     res.writeHead(200);
     res.write(JSON.stringify(recievedObj));
     res.end();
@@ -62,7 +72,7 @@ const server = http.createServer(function(req, res){
     var t = process.hrtime()
     timeStamp[count] =  t[1];
     res.writeHead(200);
-    res.write("");
+    res.write("received "+count);
     res.end();
     //console.log("received latency check " + (count+1));
     //console.log(timeStamp);

@@ -15,8 +15,8 @@ json obj design:
 const http = require("http");
 const axios = require("axios");
 
-//var ip = "15.207.106.148"  //Mumbai Server
-var ip = "127.0.0.1" //Local
+var ip = "15.207.106.148"  //Mumbai Server
+//var ip = "127.0.0.1" //Local
 var j = 0;
 // JS Object to catch the notification
 var notifObj = {};
@@ -42,14 +42,17 @@ while(j<12){
   j++;
 }
 */
-postData();
+
+//postData();
+getNotif();
 
 // sending one request with data
 function postData(){
   //console.log(testObj);
   axios.post("http://"+ ip +":8585/patient/", testObj)
   .then(function (response) {
-    console.log(">" + Date() + "\n" + response.status + " " + response.statusText + "\n\n" + response.config.url + "\n\n" + JSON.parse(response.data));
+    console.log(">" + Date() + "\n" + response.status + " " + response.statusText + "\n\n" + response.config.url);
+    console.log(response.data)
   })
   .catch(function (error) {
     console.log(error);
