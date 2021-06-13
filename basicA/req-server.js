@@ -37,14 +37,20 @@ const server = http.createServer(function(req, res){
       res.end(JSON.stringify(recievedObj));
       console.log(">" + Date() + "\n", recievedObj);
       //clearing the notifObj.param string
-      notifObj.param = "!!ALARM!!\n";
+      notifObj.param = "!!ALARM!!";
       //if statements for notifying the doctor application
-      if (recievedObj.heartRate < 60){
+      if (recievedObj.spo2 < 90){
         notifObj.flag = 1;
-        notifObj.param = notifObj.param + "Heart Rate is " + recievedObj.heartRate;
+        notifObj.param = notifObj.param + "\nSpO2 level is " + recievedObj.spo2;
+      }
+      if(recievedObj.heartRate < 60){
+        notifObj.flag = 1;
+        notifObj.param = notifObj.param + "\nHeart Rate is " + recievedObj.heartRate;
         //console.log(notifObj);
-      }else{
-
+      }
+      if(recievedObj.temp > 991){
+        notifObj.flag = 1;
+        notifObj.param = notifObj.param + "\nTemperature is " + (recievedObj.temp/10);
       }
     })
 //responding to get request got notification at /doc/notif/
