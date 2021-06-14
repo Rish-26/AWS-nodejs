@@ -54,7 +54,7 @@ const server = http.createServer(function(req, res){
       }
     })
 //responding to get request got notification at /doc/notif/
-  }else if (req.method.toLowerCase() == 'get' & req.url == '/doc/notif/' & notifObj.flag == 1){
+  }else if (req.method.toLowerCase() == 'get' & req.url == '/doc/notif/'){
     res.writeHead(200);
     res.write(JSON.stringify(notifObj));
     res.end();
@@ -76,7 +76,6 @@ const server = http.createServer(function(req, res){
     console.log(timeStamp);
     count++;
     if (count == 11){
-
       for(i=0; i<10; i++){
         if(timeStamp[i+1] > timeStamp[i]){
           lat[i] = (timeStamp[i+1] - timeStamp[i])/1000000;  //converting to ms
