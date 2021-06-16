@@ -36,8 +36,9 @@ const server = http.createServer(function(req, res){
       recievedObj = recievedObj.fields;
       res.end(JSON.stringify(recievedObj));
       console.log(">" + Date() + "\n", recievedObj);
-      //clearing the notifObj.param string
-      notifObj.param = "!!ALARM!!";
+      //clearing the notifObj string
+      notifObj.flag = 0;
+      notifObj.param = "!!ALARM!!\n";
       //if statements for notifying the doctor application
       if (recievedObj.spo2 < 90){
         notifObj.flag = 1;
