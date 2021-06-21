@@ -19,15 +19,16 @@ var testObj = {"patientID":"55",
  "temp":960
 };
 
-getData();
 //this code works infinately.
 /*
 while(j<12){
-  setInterval(getData, 10);
+  getNotif();
   //console.log(j);
   j++;
 }
 */
+
+
 
 //Getting data continuously
 function getData(){
@@ -39,4 +40,19 @@ function getData(){
   .catch(function (error){
     console.log(error);
   })
+}
+
+//sending doctor's app notif get request
+function getNotif(){
+  axios.get("http://"+ ip + ":8585/doc/notif/")
+  .then(function (response) {
+    // handle success
+    notifObj = response.data;
+    console.log(response);
+    //console.log(">" + Date() + "\n" + notifObj.param);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  });
 }
