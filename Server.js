@@ -59,7 +59,9 @@ const server = http.createServer(function(req, res){
     res.writeHead(200);
     res.write(JSON.stringify(notifObj));
     res.end();
-    console.log(">" + Date() + "\nNotification sent.");
+    if (notifObj.flag == 1){
+      console.log(">" + Date() + "\nNotification sent.");
+    }
     notifObj.flag = 0;
     notifObj.param = "!!ALARM!!\n";
   }else if(req.method.toLowerCase() == 'get' & req.url == '/doc/data/'){

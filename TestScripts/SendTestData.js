@@ -44,7 +44,7 @@ while(j<12){
 }
 */
 
-//postData();
+postData();
 getNotif();
 
 // sending one request with data
@@ -66,8 +66,8 @@ function getNotif(){
   .then(function (response) {
     // handle success
     notifObj = response.data;
-    console.log(notifObj);
-    console.log(">" + Date() + "\n" + notifObj.param);
+    console.log(response);
+    //console.log(">" + Date() + "\n" + notifObj.param);
   })
   .catch(function (error) {
     // handle error
