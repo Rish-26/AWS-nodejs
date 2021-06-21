@@ -22,3 +22,14 @@ Install axios library https://github.com/axios/axios.git
 
 # Final demonstration: 
 https://youtu.be/a9fzAHrrT04
+
+# Results:
+
+## Latency on 5G network:
+![Latency on 5G network](https://github.com/Rish-26/AWS-nodejs/blob/main/Screenshots/Latency%20on%205G%20newtork.jpg) 
+
+## Latency on 4G network:
+![Latency on 4G network](https://github.com/Rish-26/AWS-nodejs/blob/main/Screenshots/Latency%20on%204G%20network.jpg) 
+
+## Notification on Doctor's application:
+![Notification on Doctor's application](https://github.com/Rish-26/AWS-nodejs/blob/main/Screenshots/Notification%20on%20Doctor's%20app.jpg) 
